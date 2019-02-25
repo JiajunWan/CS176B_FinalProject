@@ -1,11 +1,15 @@
-import os, webbrowser, urllib
+import os, webbrowser, urllib, pyYify, wget
 from flask import Flask, render_template, url_for, flash, redirect
 from forms import InformationForm
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'asdf'
 
-uploaded = ["filenames"]
+downloaded = []
+uploaded = []
+
+# http://releases.ubuntu.com/18.04/ubuntu-18.04.2-desktop-amd64.iso.torrent
+# http://releases.ubuntu.com/18.04/ubuntu-18.04.2-desktop-amd64.iso.torrent?_ga=2.66795821.2059850810.1551004639-1774269339.1551004639
 
 
 @app.route("/")
@@ -23,10 +27,10 @@ def bt_address():
             urllib.request.urlopen(form.address.data)
         except urllib.error.HTTPError as e:
             error = 1
-            flash('Downloading failed. Please check address', 'danger')
+            flash('Downloading failed. Please check address!', 'danger')
         except urllib.error.URLError as e:
             error = 1
-            flash('Downloading failed. Please check address', 'danger')
+            flash('Downloading failed. Please check address!', 'danger')
         if error is not 1:
             flash('BitTorrent Download starts...', 'success')
             return redirect(url_for('home'))
@@ -39,20 +43,18 @@ def http_address():
     if form.validate_on_submit():
         error = 0
         try:
-            webbrowser.open(form.address.data)
-        except webbrowser.Error as e:
+            urllib.request.urlopen(form.address.data)
+        except urllib.error.HTTPError as e:
             error = 1
-            flash('Downloading failed. Please check address', 'danger')
-        except webbrowser.Error as e:
+            flash('HTTP Downloading failed. Please check address!', 'danger')
+        except urllib.error.URLError as e:
             error = 1
-            flash('Downloading failed. Please check address', 'danger')
+            flash('URL Error. Please check URL!', 'danger')
         if error is not 1:
             flash('HTTP Download starts...', 'success')
-            os.system(python3 -m webbrowser )
+            filename = wget.download(form.address.data, "/home/jiajunwan2015/cs176b/CS176B_FinalProject/downloads")
+            downloaded.append(filename)
             return redirect(url_for('home'))
-
-
-        
     return render_template('http_address.html', title='HTTP', form=form)
 
 
