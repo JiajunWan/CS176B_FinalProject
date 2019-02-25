@@ -1,0 +1,7 @@
+bs4
+requests
+re
+urllib3
+urllib
+json
+
