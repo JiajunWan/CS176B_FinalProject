@@ -10,7 +10,8 @@ uploaded = []
 
 # http://releases.ubuntu.com/18.04/ubuntu-18.04.2-desktop-amd64.iso.torrent
 # http://releases.ubuntu.com/18.04/ubuntu-18.04.2-desktop-amd64.iso.torrent?_ga=2.66795821.2059850810.1551004639-1774269339.1551004639
-
+# http://wx2.sinaimg.cn/large/72084184gy1fjze50jkkcj216o1kwqgk.jpg
+# https://sukebei.nyaa.si/download/2660675.torrent
 
 @app.route("/")
 @app.route("/home")
@@ -33,7 +34,10 @@ def bt_address():
             flash('Downloading failed. Please check address!', 'danger')
         if error is not 1:
             flash('BitTorrent Download starts...', 'success')
+            command = "aria2c -d /home/jiajunwan2015/cs176b/CS176B_FinalProject/downloads " + form.address.data
+            os.system(command)
             return redirect(url_for('home'))
+            
     return render_template('bt_address.html', title='BitTorrent', form=form)
 
 
