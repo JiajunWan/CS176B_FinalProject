@@ -4,7 +4,4 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class InformationForm(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])   # Add possible address verification
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Start')
