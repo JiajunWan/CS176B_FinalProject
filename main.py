@@ -61,23 +61,18 @@ def bt_address():
             flash('Downloading failed. Please check address!', 'danger')
         if error is not 1:
             flash('BitTorrent Download starts...', 'success')
-            command = "aria2c -d /home/jiajunwan2015/cs176b/downloads --allow-overwrite=true --seed-time=0 --summary-interval=0 --follow-torrent=mem " + form.address.data
-            pid = os.fork()
-            if pid > 0:
-            # parent process, return and keep running
-                flash('Upload to Google Drive starts...', 'success')
-                time.sleep(1)
-                drive = GoogleDrive(gauth)
-                for filename in glob.glob("/home/jiajunwan2015/cs176b/downloads/**", recursive=True):
-                    if not os.path.isdir(filename):
-                        if filename not in uploaded:
-                            file1 = drive.CreateFile()
-                            file1.SetContentFile(filename)
-                            file1.Upload()
-                            uploaded.append(filename)
-                return redirect(url_for('home'))
+            command = "aria2c -d /home/alphajun/cs176b/downloads --allow-overwrite=true --seed-time=0 --summary-interval=0 --follow-torrent=mem " + form.address.data
             os.system(command)
             flash('BitTorrent Download finished!', 'success')
+            flash('Upload to Google Drive starts...', 'success')
+            drive = GoogleDrive(gauth)
+            for filename in glob.glob("/home/alphajun/cs176b/downloads/**", recursive=True):
+                if not os.path.isdir(filename):
+                    if filename not in uploaded:
+                        file1 = drive.CreateFile()
+                        file1.SetContentFile(filename)
+                        file1.Upload()
+                        uploaded.append(filename)
             return redirect(url_for('home'))
     return render_template('bt_address.html', title='BitTorrent', form=form)
 
@@ -97,7 +92,7 @@ def http_address():
             flash('URL Error. Please check URL!', 'danger')
         if error is not 1:
             flash('HTTP Download starts...', 'success')
-            filename = wget.download(form.address.data, "/home/jiajunwan2015/cs176b/downloads")
+            filename = wget.download(form.address.data, "/home/alphajun/cs176b/downloads")
             flash('Upload to Google Drive starts...', 'success')
             time.sleep(1)
             drive = GoogleDrive(gauth)
@@ -111,4 +106,4 @@ def http_address():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=8080)
+    app.run(host="0.0.0.0", port=8080)
