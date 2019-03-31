@@ -1,5 +1,4 @@
-Flask==1.0.2
-bs4
-requests
-re
-urllib3
+setuptools
+pydrive
+flask
+flask_wtf
