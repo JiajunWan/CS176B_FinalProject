@@ -61,11 +61,11 @@ def bt_address():
             flash('Downloading failed. Please check address!', 'danger')
         if error is not 1:
             flash('BitTorrent Download starts...', 'success')
+            drive = GoogleDrive(gauth)
             command = "aria2c -d ~/cs176b/downloads --allow-overwrite=true --seed-time=0 --summary-interval=0 --follow-torrent=mem " + form.address.data
             os.system(command)
             flash('BitTorrent Download finished!', 'success')
             flash('Upload to Google Drive starts...', 'success')
-            drive = GoogleDrive(gauth)
             for filename in glob.glob("/root/cs176b/downloads/**", recursive=True):
                 if not os.path.isdir(filename):
                     if filename not in uploaded:
