@@ -1,4 +1,5 @@
 setuptools
+wget
 pydrive
 flask
 flask_wtf
