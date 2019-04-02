@@ -66,7 +66,7 @@ def bt_address():
             flash('BitTorrent Download finished!', 'success')
             flash('Upload to Google Drive starts...', 'success')
             drive = GoogleDrive(gauth)
-            for filename in glob.glob("~/cs176b/downloads/**", recursive=True):
+            for filename in glob.glob("/root/cs176b/downloads/**", recursive=True):
                 if not os.path.isdir(filename):
                     if filename not in uploaded:
                         file1 = drive.CreateFile()
@@ -92,7 +92,7 @@ def http_address():
             flash('URL Error. Please check URL!', 'danger')
         if error is not 1:
             flash('HTTP Download starts...', 'success')
-            filename = wget.download(form.address.data, "~/cs176b/downloads")
+            filename = wget.download(form.address.data, "/root/cs176b/downloads")
             flash('Upload to Google Drive starts...', 'success')
             time.sleep(1)
             drive = GoogleDrive(gauth)
