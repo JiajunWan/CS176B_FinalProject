@@ -62,7 +62,7 @@ def bt_address():
         if error is not 1:
             flash('BitTorrent Download starts...', 'success')
             drive = GoogleDrive(gauth)
-            command = "aria2c -d ~/cs176b/downloads --allow-overwrite=true --seed-time=0 --summary-interval=0 --follow-torrent=mem " + form.address.data
+            command = "aria2c -d ~/cs176b/downloads --allow-overwrite=true --seed-time=0 --summary-interval=0 --max-upload-limit=200K --follow-torrent=mem " + form.address.data
             os.system(command)
             flash('BitTorrent Download finished!', 'success')
             flash('Upload to Google Drive starts...', 'success')
